@@ -68,3 +68,8 @@ This section has moved here: [https://facebook.github.io/create-react-app/docs/d
 ### `npm run build` fails to minify
 
 This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+
+- Мое портфолио: [https://alyakin.art](https://alyakin.art)
+- Мой telegram: [@josefKru](https://t.me/josefKru)
+- Мой профиль LinkedIn: [LinkedIn](https://www.linkedin.com/in/ivan-alyakin-976842243/)
+- Электронная почта: josefkaru@gmail.com
