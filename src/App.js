@@ -1,7 +1,6 @@
 import React from 'react'
-// import TableComponent from './TableComponent'
 import './App.css'
-import TableComponent from './components/TableComponent/TableComponent'
+import TableComponent from './components/Table/TableComponent'
 
 const App = () => {
   return (
