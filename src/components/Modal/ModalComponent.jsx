@@ -1,22 +1,30 @@
 import { Button, DatePicker, Form, Input, Modal } from 'antd'
 import React from 'react'
 import './ModalComponent.css'
+import moment from 'moment/moment'
 
 const ModalComponent = ({ isVisible, setIsVisible, editingData, setData }) => {
   const handleCancel = () => {
     setIsVisible(false)
   }
   const handleSave = (values) => {
-    console.log(editingData)
+    const formattedDate = moment(values.date).format('YYYY-MM-DD')
+
     if (editingData) {
       setData((prevData) =>
         prevData.map((item) =>
-          item.key === editingData.key ? { ...item, ...values } : item
+          item.key === editingData.key
+            ? { ...item, ...values, date: formattedDate }
+            : item
         )
       )
     } else {
-      setData((prevData) => [...prevData, { ...values, key: Date.now() }])
+      setData((prevData) => [
+        ...prevData,
+        { ...values, date: formattedDate, key: Date.now() },
+      ])
     }
+
     setIsVisible(false)
   }
 
@@ -27,7 +35,7 @@ const ModalComponent = ({ isVisible, setIsVisible, editingData, setData }) => {
       onCancel={handleCancel}
       footer={false}
     >
-      <Form onFinish={handleSave}>
+      <Form onFinish={handleSave} initialValues={editingData}>
         <Form.Item
           label='Имя'
           name='name'
