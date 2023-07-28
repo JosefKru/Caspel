@@ -1,7 +1,7 @@
 import { Button, DatePicker, Form, Input, Modal } from 'antd'
 import React, { useEffect } from 'react'
-import './ModalComponent.css'
 import moment from 'moment/moment'
+import './ModalComponent.css'
 
 const ModalComponent = ({
   isVisible,
