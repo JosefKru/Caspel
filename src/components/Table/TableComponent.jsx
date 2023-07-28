@@ -80,7 +80,6 @@ const TableComponent = () => {
         setIsVisible={setIsVisible}
         editingData={editingData}
         setData={setData}
-        data={data}
         setEditingData={setEditingData}
       />
       <Input.Search
