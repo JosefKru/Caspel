@@ -1,7 +1,8 @@
 import React, { useState } from 'react'
 import { Table, Button, Input } from 'antd'
-import ModalComponent from '../Modal/ModalComponent'
 import { EditOutlined, DeleteOutlined } from '@ant-design/icons'
+import ModalComponent from '../Modal/ModalComponent'
+import './TableComponent.css'
 
 const TableComponent = () => {
   const [data, setData] = useState([])
@@ -36,7 +37,7 @@ const TableComponent = () => {
           <Button type='primary' onClick={() => handleEdit(record)}>
             <EditOutlined />
           </Button>
-          <Button type='danger' onClick={() => handleDelete(record.key)}>
+          <Button type='danger' onClick={() => handleDelete(record)}>
             <DeleteOutlined />
           </Button>
         </>
@@ -45,32 +46,41 @@ const TableComponent = () => {
   ]
 
   const handleSearch = () => {}
-  const handleEdit = () => {}
-  const handleDelete = () => {}
+
+  const handleEdit = (record) => {
+    setIsVisible(true)
+    setEditingData(record)
+  }
+
+  const handleDelete = (record) => {
+    setData(data.filter((data) => data.key !== record.key))
+  }
 
   const handleAdd = () => {
     setIsVisible(true)
+    setEditingData(null)
   }
 
   return (
-    <div>
+    <>
       <ModalComponent
         isVisible={isVisible}
         setIsVisible={setIsVisible}
         editingData={editingData}
         setData={setData}
         data={data}
+        setEditingData={setEditingData}
       />
       <Input.Search
         placeholder='Поиск...'
         onChange={(e) => handleSearch(e.target.value)}
-        style={{ marginBottom: 16 }}
+        className='inputSearch'
       />
-      <Button type='primary' onClick={handleAdd} style={{ marginBottom: 16 }}>
+      <Button type='primary' onClick={handleAdd} className='addButton'>
         Добавить
       </Button>
       <Table columns={columns} dataSource={data} />
-    </div>
+    </>
   )
 }
 

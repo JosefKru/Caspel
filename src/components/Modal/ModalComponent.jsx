@@ -1,16 +1,41 @@
 import { Button, DatePicker, Form, Input, Modal } from 'antd'
-import React from 'react'
+import React, { useEffect } from 'react'
 import './ModalComponent.css'
 import moment from 'moment/moment'
 
-const ModalComponent = ({ isVisible, setIsVisible, editingData, setData }) => {
+const ModalComponent = ({
+  isVisible,
+  setIsVisible,
+  editingData,
+  setData,
+  setEditingData,
+}) => {
+  const [form] = Form.useForm()
+
+  // Эффект для обновления значений формы при изменении editingData
+  useEffect(() => {
+    if (editingData) {
+      // Если редактируется существующая запись, устанавливаем значения формы из editingData (вместо initialValues={editingData})
+      form.setFieldsValue({
+        name: editingData.name,
+        date: moment(editingData.date),
+        value: editingData.value,
+      })
+    } else {
+      // Если добавляется новая запись, сбрасываем значения формы
+      form.resetFields()
+    }
+  }, [editingData, form])
+
   const handleCancel = () => {
     setIsVisible(false)
   }
+
   const handleSave = (values) => {
     const formattedDate = moment(values.date).format('YYYY-MM-DD')
 
     if (editingData) {
+      // Если редактируется существующая запись, обновляем ее в массиве данных
       setData((prevData) =>
         prevData.map((item) =>
           item.key === editingData.key
@@ -18,24 +43,26 @@ const ModalComponent = ({ isVisible, setIsVisible, editingData, setData }) => {
             : item
         )
       )
+      setEditingData(values)
     } else {
+      // Если добавляется новая запись, добавляем ее в массив данных
       setData((prevData) => [
         ...prevData,
         { ...values, date: formattedDate, key: Date.now() },
       ])
+      setEditingData(values)
     }
-
     setIsVisible(false)
   }
 
   return (
     <Modal
-      title='Добавить запись'
+      title={editingData ? 'Редактировать данные' : 'Добавить запись'}
       open={isVisible}
       onCancel={handleCancel}
       footer={false}
     >
-      <Form onFinish={handleSave} initialValues={editingData}>
+      <Form onFinish={handleSave} form={form}>
         <Form.Item
           label='Имя'
           name='name'
